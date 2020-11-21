@@ -1,4 +1,4 @@
-module github.com/soapBubbleCoward/golang_aliyunoss
+module github.com/soapBubbleCoward/aliyun_oss
 
 go 1.15
 
