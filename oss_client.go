@@ -1,4 +1,4 @@
-package main
+package aliyun_oss
 
 import (
 	"github.com/aliyun/aliyun-oss-go-sdk/oss"

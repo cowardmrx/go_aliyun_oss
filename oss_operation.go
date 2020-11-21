@@ -1,4 +1,4 @@
-package main
+package aliyun_oss
 
 import (
 	"bytes"
