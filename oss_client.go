@@ -6,12 +6,12 @@ import (
 )
 
 type AliOssConfig struct {
-	EndPoint 		string  `json:"end_point"`
-	AccessKeyId 	string	`json:"access_id"`
-	AccessKeySecret string	`json:"access_key"`
-	BucketName 		string	`json:"bucket_name"`
-	Domain 			string	`json:"domain"`
-	OriginalFileName 	bool 	`json:"only_file_name"`
+	EndPoint 		string
+	AccessKeyId 	string
+	AccessKeySecret string
+	BucketName 		string
+	Domain 			string
+	OriginalFileName 	bool
 }
 
 type AliOssConfigInterface interface {
