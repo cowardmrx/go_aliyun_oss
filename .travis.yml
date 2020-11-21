@@ -1,0 +1,17 @@
+language: go
+dist: aliyun_oss
+go:
+  - 1.14
+  - 1.15
+
+env:
+  - GO111MODULE=on
+
+before_install:
+  - go get github.com/aliyun/aliyun-oss-go-sdk
+  - go get github.com/satori/go.uuid
+  - go get golang.org/x/time
+
+script:
+  #  - go test -v -cover
+  - $HOME/gopath/bin/goveralls -v -service=travis-ci
