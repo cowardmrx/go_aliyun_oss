@@ -72,9 +72,8 @@ func (ossFile *OssFile) FileTypeTransForm() (*OssFile,error) {
 
 	default:
 		fmt.Println(reflect.TypeOf(ossFile.File))
-		panic("file type error" )
+		panic("file type is not support" )
 	}
-
 
 	ossFile.GetFileType()
 

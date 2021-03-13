@@ -24,7 +24,7 @@ type AliOssConfigInterface interface {
 func (coon *AliOssConfig) CheckConfig() {
 	//check endPoint
 	if coon.EndPoint == "" || len(coon.EndPoint) <= 0 {
-		panic("endPoint value can not empty")
+		panic("endPoint value can't empty")
 	}
 
 	//check endPoint http prefix if empty default http
@@ -34,17 +34,17 @@ func (coon *AliOssConfig) CheckConfig() {
 
 	//check access secret
 	if coon.AccessKeyId == "" || len(coon.AccessKeyId) <= 0 {
-		panic("accessKeyId can not empty")
+		panic("accessKeyId can't empty")
 	}
 
 	//check access key
 	if coon.AccessKeySecret == "" || len(coon.AccessKeySecret) <= 0 {
-		panic("accessKeySecret can not empty")
+		panic("accessKeySecret can't empty")
 	}
 
 	//check bucket name
 	if coon.BucketName == "" || len(coon.BucketName) <= 0 {
-		panic("bucketName can not empty")
+		panic("bucketName can't empty")
 	}
 
 }
@@ -105,7 +105,7 @@ func (coon *AliOssConfig) GetAccessibleUrl() string {
 		//not exists
 	} else {
 		//judge domain is http prefix and https prefix
-		if strings.HasPrefix("http://",coon.Domain) == false && strings.HasPrefix("https://",coon.Domain) == false {
+		if strings.HasPrefix(coon.Domain,"http://") == false && strings.HasPrefix(coon.Domain,"https://") == false {
 			domain = endPointUriPrefix + "://" + coon.Domain
 		} else {
 			domain = coon.Domain
