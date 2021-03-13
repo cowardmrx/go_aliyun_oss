@@ -1,4 +1,4 @@
-package aliyun_oss
+package go_aliyun_oss
 
 import (
 	"bytes"

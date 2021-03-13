@@ -1,4 +1,4 @@
-module github.com/cowardmrx/go-aliyun-oss
+module github.com/cowardmrx/go_aliyun_oss
 
 go 1.15
 
