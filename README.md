@@ -24,8 +24,8 @@ go get github.com/cowardmrx/go_aliyun_oss
 
 	ossClient := ossConfig.CreateOssConnect()
     
-    //put 方法返回完整的oss 可访问地址
-	uri := ossClient.Put("logo/","./File/3HaqWaOzJWD86DDvZD9Pmn9VUEOBOBbuWackGOXb (2).jpeg")
+    //put 方法返回完整的oss 可访问地址 第三个参数 如果文件不是[]byte数组的可以直接传递空，如果是[]byte也可以是空，会默认给出一个png的文件类型，建议实际中给出文件类型
+	uri := ossClient.Put("logo/","./File/3HaqWaOzJWD86DDvZD9Pmn9VUEOBOBbuWackGOXb (2).jpeg","")
     fmt.Println(uri)
 
     //HasExists 方法返回一个bool值 true-存在 false-不存在

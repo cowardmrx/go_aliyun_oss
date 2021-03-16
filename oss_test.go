@@ -17,7 +17,7 @@ func TestPut(t *testing.T)  {
 
 	client := ossConfig.CreateOssConnect()
 
-	uri := client.Put("logo/","./File/3HaqWaOzJWD86DDvZD9Pmn9VUEOBOBbuWackGOXb (2).jpeg")
+	uri := client.Put("logo/","./File/3HaqWaOzJWD86DDvZD9Pmn9VUEOBOBbuWackGOXb (2).jpeg",".png")
 
 	fmt.Println(uri)
 }
@@ -41,7 +41,7 @@ func TestPutBase64(t *testing.T)  {
 	bat,_ := base64.StdEncoding.DecodeString(fileStr)
 
 
-	uri := client.Put("logo/",bat)
+	uri := client.Put("logo/",bat,".png")
 	//
 	fmt.Println(uri)
 }

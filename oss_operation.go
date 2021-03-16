@@ -15,11 +15,12 @@ type AliOssClient struct {
 //params:  ossDir string  `oss dir [要推送到的oss目录]`  example: test/20201121/
 //params:  file interface `upload file resource [文件资源]`
 //return string  `oss file accessible uri [可访问地址]`
-func (client *AliOssClient) Put(ossDir string, file interface{}) string {
+func (client *AliOssClient) Put(ossDir string, file interface{},fileType string) string {
 	//file to []byte
 	//文件转字节流
 	uploadFile := &OssFile{
 		File: file,
+		FileType: fileType,
 	}
 
 	ossFile,err := uploadFile.FileTypeTransForm()

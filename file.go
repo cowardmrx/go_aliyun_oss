@@ -31,6 +31,7 @@ func (ossFile *OssFile) FileTypeTransForm() (*OssFile,error) {
 
 	switch ossFile.File.(type) {
 	case *os.File:
+
 		ossFile.FileByte,err = ioutil.ReadAll(ossFile.File.(*os.File))
 
 		if err != nil {
@@ -76,10 +77,16 @@ func (ossFile *OssFile) FileTypeTransForm() (*OssFile,error) {
 
 		break
 
-	// 支持[]byte数组传递 因为无法解析文件类型 默认直接给出文件类型为.jpeg
+	// 支持[]byte数组传递 因为无法解析文件类型 默认直接给出文件类型为.png
 	case []byte:
 		ossFile.FileByte = ossFile.File.([]byte)
-		ossFile.FileOldName = uuid.NewV4().String() + ".jpeg"
+
+		//判断是否指定了文件的类型 如果没有指定默认为png格式
+		if ossFile.FileType == "" || len(ossFile.FileType) <= 0 {
+			ossFile.FileOldName = uuid.NewV4().String() + ".png"
+		} else {
+			ossFile.FileOldName = uuid.NewV4().String() + ossFile.FileType
+		}
 
 		break
 
@@ -96,12 +103,16 @@ func (ossFile *OssFile) FileTypeTransForm() (*OssFile,error) {
 //split file type and generate file name
 //截取文件类型
 func (ossFile *OssFile) GetFileType() *OssFile {
-	//from oldFileName split file type
-	fileTypeSufIndex := strings.Index(ossFile.FileOldName,".")
 
-	fileType := ossFile.FileOldName[fileTypeSufIndex:]
+	// 当没有传递文件类型时去文件名中截取出文件类型
+	if ossFile.FileType == "" || len(ossFile.FileType) <= 0 {
+		//from oldFileName split file type
+		fileTypeSufIndex := strings.Index(ossFile.FileOldName,".")
 
-	ossFile.FileType = fileType
+		fileType := ossFile.FileOldName[fileTypeSufIndex:]
+
+		ossFile.FileType = fileType
+	}
 
 	//generate only file name
 	ossFile.FileNewName = uuid.NewV5(uuid.NewV4(),ossFile.FileOldName).String() + ossFile.FileType
