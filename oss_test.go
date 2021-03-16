@@ -24,10 +24,10 @@ func TestPut(t *testing.T)  {
 
 func TestPutBase64(t *testing.T)  {
 	ossConfig := &AliOssConfig{
-		EndPoint: "oss-cn-shenzhen.aliyuncs.com",
-		AccessKeyId: "LTAI4FwmLMvboJf97riakG9e",
-		AccessKeySecret: "1dclKyqjiI1SDfr30IDvO0eZmcJLo3",
-		BucketName: "test-myself-bucket",
+		EndPoint: "",
+		AccessKeyId: "",
+		AccessKeySecret: "",
+		BucketName: "",
 	}
 
 	client := ossConfig.CreateOssConnect()
