@@ -39,6 +39,8 @@ func (ossFile *OssFile) FileTypeTransForm() (*OssFile,error) {
 
 		_,ossFile.FileOldName = filepath.Split(ossFile.File.(*os.File).Name())
 
+		break
+
 	case *multipart.FileHeader:
 
 		fileResources,err := ossFile.File.(*multipart.FileHeader).Open()
@@ -57,6 +59,8 @@ func (ossFile *OssFile) FileTypeTransForm() (*OssFile,error) {
 
 		ossFile.FileOldName = ossFile.File.(*multipart.FileHeader).Filename
 
+		break
+
 	case string:
 		newFile,err := os.Open(ossFile.File.(string))
 
@@ -69,6 +73,15 @@ func (ossFile *OssFile) FileTypeTransForm() (*OssFile,error) {
 		ossFile.FileByte,err = ioutil.ReadAll(newFile)
 
 		_,ossFile.FileOldName = filepath.Split(newFile.Name())
+
+		break
+
+	// 支持[]byte数组传递 因为无法解析文件类型 默认直接给出文件类型为.jpeg
+	case []byte:
+		ossFile.FileByte = ossFile.File.([]byte)
+		ossFile.FileOldName = uuid.NewV4().String() + ".jpeg"
+
+		break
 
 	default:
 		fmt.Println(reflect.TypeOf(ossFile.File))

@@ -1,7 +1,9 @@
 package go_aliyun_oss
 
 import (
+	"encoding/base64"
 	"fmt"
+	"io/ioutil"
 	"testing"
 )
 
@@ -17,6 +19,30 @@ func TestPut(t *testing.T)  {
 
 	uri := client.Put("logo/","./File/3HaqWaOzJWD86DDvZD9Pmn9VUEOBOBbuWackGOXb (2).jpeg")
 
+	fmt.Println(uri)
+}
+
+func TestPutBase64(t *testing.T)  {
+	ossConfig := &AliOssConfig{
+		EndPoint: "oss-cn-shenzhen.aliyuncs.com",
+		AccessKeyId: "LTAI4FwmLMvboJf97riakG9e",
+		AccessKeySecret: "1dclKyqjiI1SDfr30IDvO0eZmcJLo3",
+		BucketName: "test-myself-bucket",
+	}
+
+	client := ossConfig.CreateOssConnect()
+
+	// 读取base
+	file,_ := ioutil.ReadFile("./File/3HaqWaOzJWD86DDvZD9Pmn9VUEOBOBbuWackGOXb (2).jpeg")
+
+
+	fileStr := base64.StdEncoding.EncodeToString(file)
+
+	bat,_ := base64.StdEncoding.DecodeString(fileStr)
+
+
+	uri := client.Put("logo/",bat)
+	//
 	fmt.Println(uri)
 }
 

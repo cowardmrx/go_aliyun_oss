@@ -5,6 +5,7 @@
 对阿里云oss-golang sdk 进行上传、删除的简单封装，便于使用
 上传使用字节流，内自带 *os.File | *multipart.FileHeader 文件类型转字节流，
 以及使用字符串路径 例如：./test.png 。测试案例oss_test.go中有不同操作的案例
+新版兼容文件[]byte化上传
 
 #install 
 go get github.com/cowardmrx/go_aliyun_oss
