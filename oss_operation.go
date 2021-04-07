@@ -11,18 +11,18 @@ type AliOssClient struct {
 	Client *oss.Bucket
 }
 
-type OssResponse struct {
+type ossResponse struct {
+	Host string
 	LongPath string
 	ShortPath string
 	FileName string
-	Host string
 }
 
 //推送文件到oss
 //params:  ossDir string  `oss dir [要推送到的oss目录]`  example: test/20201121/
 //params:  file interface `upload file resource [文件资源]`
 //return string  `oss file accessible uri [可访问地址]`
-func (client *AliOssClient) Put(ossDir string, file interface{},fileType string) *OssResponse {
+func (client *AliOssClient) Put(ossDir string, file interface{},fileType string) *ossResponse {
 	//file to []byte
 	//文件转字节流
 	uploadFile := &OssFile{
@@ -36,6 +36,7 @@ func (client *AliOssClient) Put(ossDir string, file interface{},fileType string)
 		panic("transfer file failed" + err.Error())
 	}
 
+	// 最终的oss名称
 	var ossFileName string
 
 	//ossPath = oss dir + upload file name
@@ -60,7 +61,7 @@ func (client *AliOssClient) Put(ossDir string, file interface{},fileType string)
 		panic("put file to oss failed:" + err.Error())
 	}
 
-	return &OssResponse{
+	return &ossResponse{
 		Host: client.Domain,
 		LongPath: client.Domain + "/" + ossPath,
 		ShortPath: ossPath,
