@@ -20,7 +20,7 @@ type AliOssConfigInterface interface {
 	GetAccessibleUrl() string
 }
 
-//check AliOssConfig value is exists
+// CheckConfig check AliOssConfig value is exists
 func (coon *AliOssConfig) CheckConfig() {
 	//check endPoint
 	if coon.EndPoint == "" || len(coon.EndPoint) <= 0 {
@@ -49,7 +49,7 @@ func (coon *AliOssConfig) CheckConfig() {
 
 }
 
-//en: create oss connect client
+// CreateOssConnect en: create oss connect client
 //创建阿里云oss 链接客户端
 func (coon *AliOssConfig) CreateOssConnect() *AliOssClient {
 	//config check
@@ -82,7 +82,7 @@ func (coon *AliOssConfig) CreateOssConnect() *AliOssClient {
 	}
 }
 
-//get oss accessible url
+// GetAccessibleUrl get oss accessible url
 //拼接阿里云oss可访问地址
 func (coon *AliOssConfig) GetAccessibleUrl() string {
 	var domain string

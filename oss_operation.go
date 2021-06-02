@@ -11,7 +11,7 @@ type AliOssClient struct {
 	Client *oss.Bucket
 }
 
-//推送文件到oss
+// Put 推送文件到oss
 //params:  ossDir string  `oss dir [要推送到的oss目录]`  example: test/20201121/
 //params:  file interface `upload file resource [文件资源]`
 //return string  `oss file accessible uri [可访问地址]`
@@ -52,7 +52,7 @@ func (client *AliOssClient) Put(ossDir string, file interface{},fileType string)
 	return client.Domain + "/" + ossPath
 }
 
-//校验文件是否已经存在
+// HasExists 校验文件是否已经存在
 //check file already exists in oss server
 //params: ossFilePath	string 	`file oss path [文件的oss的路径]`
 func (client *AliOssClient) HasExists(ossFilePath string) bool {
@@ -67,7 +67,7 @@ func (client *AliOssClient) HasExists(ossFilePath string) bool {
 	return isExists
 }
 
-//删除文件-单文件删除
+// Delete 删除文件-单文件删除
 //delete one file in oss
 //params ossPath string `file oss path [文件的oss路径]`
 //return bool
@@ -83,7 +83,7 @@ func (client *AliOssClient) Delete(ossFilePath string) bool {
 	return true
 }
 
-//删除文件-多文件删除
+// DeleteMore 删除文件-多文件删除
 //delete more file in oss
 //params ossPath []string `file oss path array [文件的oss路径数组]`
 //return bool
@@ -96,4 +96,27 @@ func (client *AliOssClient) DeleteMore(ossFilePath []string) bool {
 	}
 
 	return true
+}
+
+// GetTemporaryUrl 获取文件临时地址
+// path string 文件路径
+// expireInSecond int64 多久后过期 单位: 秒，默认 60
+func (client *AliOssClient) GetTemporaryUrl(path string,expireInSecond int64) string {
+
+	var expireTime int64
+
+	if expireInSecond <= 0 {
+		expireTime = 60
+	} else {
+		expireTime = expireInSecond
+	}
+
+	signUrl,err := client.Client.SignURL(path,oss.HTTPGet,expireTime)
+
+	if err != nil {
+		panic("generate sign url failed:" + err.Error())
+	}
+
+	return signUrl
+
 }

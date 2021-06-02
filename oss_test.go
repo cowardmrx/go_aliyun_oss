@@ -94,3 +94,18 @@ func TestAliOssClient_DeleteMore(t *testing.T) {
 	fmt.Println(deleteRes)
 }
 
+func TestAliOssClient_GetTemporaryUrl(t *testing.T) {
+	ossConfig := &AliOssConfig{
+		EndPoint: "",
+		AccessKeyId: "",
+		AccessKeySecret: "",
+		BucketName: "",
+	}
+
+	client := ossConfig.CreateOssConnect()
+
+	singUrl := client.GetTemporaryUrl("logo/8497b913-2a79-58a1-984b-c25827f8212e.png",180)
+
+	fmt.Println(singUrl)
+}
+

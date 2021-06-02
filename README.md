@@ -44,6 +44,4 @@ go get github.com/cowardmrx/go_aliyun_oss
     })
     fmt.Println(isSuccess)
 	
-
-
-
+#详细使用方法请参照oss_test.go文件中的示例
