@@ -18,10 +18,14 @@ type ossResponse struct {
 	FileName string
 }
 
-// Put 推送文件到oss
-//params:  ossDir string  `oss dir [要推送到的oss目录]`  example: test/20201121/
-//params:  file interface `upload file resource [文件资源]`
-//return string  `oss file accessible uri [可访问地址]`
+
+//	@method: Put
+//	@description: 推送文件到oss
+//	@author: mr.x 2021-06-19 00:29:08
+//	@param: ossDir string	`[要推送到的oss目录]`  example: test/20201121/
+//	@param: file interface{}	`upload file resource [文件资源]`
+//	@param: fileType string	`文件类型`
+//	@return: *ossResponse 返回oss可访问地址等
 func (client *AliOssClient) Put(ossDir string, file interface{},fileType string) *ossResponse {
 	//file to []byte
 	//文件转字节流
@@ -69,9 +73,11 @@ func (client *AliOssClient) Put(ossDir string, file interface{},fileType string)
 	}
 }
 
-// HasExists 校验文件是否已经存在
-//check file already exists in oss server
-//params: ossFilePath	string 	`file oss path [文件的oss的路径]`
+//	@method: HasExists
+//	@description: 校验文件是否已经存在
+//	@author: mr.x 2021-06-19 00:30:21
+//	@param: ossFilePath string	file oss path [文件的oss的路径]
+//	@return: bool
 func (client *AliOssClient) HasExists(ossFilePath string) bool {
 
 	//oss check fun
@@ -84,10 +90,11 @@ func (client *AliOssClient) HasExists(ossFilePath string) bool {
 	return isExists
 }
 
-// Delete 删除文件-单文件删除
-//delete one file in oss
-//params ossPath string `file oss path [文件的oss路径]`
-//return bool
+//	@method: Delete
+//	@description: 删除文件-单文件删除
+//	@author: mr.x 2021-06-19 00:30:40
+//	@param: ossFilePath string oss 可访问路径
+//	@return: bool true - 删除成功 | false - 删除失败
 func (client *AliOssClient) Delete(ossFilePath string) bool {
 
 	//oss delete one file fun
@@ -100,10 +107,11 @@ func (client *AliOssClient) Delete(ossFilePath string) bool {
 	return true
 }
 
-// DeleteMore 删除文件-多文件删除
-//delete more file in oss
-//params ossPath []string `file oss path array [文件的oss路径数组]`
-//return bool
+//	@method: DeleteMore
+//	@description: 删除文件-多文件删除
+//	@author: mr.x 2021-06-19 00:30:56
+//	@param: ossFilePath []string
+//	@return: bool true - 批量删除成功 | false - 批量删除失败
 func (client *AliOssClient) DeleteMore(ossFilePath []string) bool {
 	//oss delete more file fun
 	_,err := client.Client.DeleteObjects(ossFilePath)
@@ -115,9 +123,13 @@ func (client *AliOssClient) DeleteMore(ossFilePath []string) bool {
 	return true
 }
 
-// GetTemporaryUrl 获取文件临时地址
-// path string 文件路径
-// expireInSecond int64 多久后过期 单位: 秒，默认 60
+
+//	@method: GetTemporaryUrl
+//	@description: 获取文件临时地址
+//	@author: mr.x 2021-06-19 00:31:34
+//	@param: path string 文件路径【段路径】
+//	@param: expireInSecond int64 有效时间 秒 默认 60S
+//	@return: string
 func (client *AliOssClient) GetTemporaryUrl(path string,expireInSecond int64) string {
 
 	var expireTime int64

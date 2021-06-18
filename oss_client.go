@@ -20,7 +20,9 @@ type AliOssConfigInterface interface {
 	GetAccessibleUrl() string
 }
 
-// CheckConfig check AliOssConfig value is exists
+//	@method: CheckConfig
+//	@description: 校验配置
+//	@author: mr.x 2021-06-19 00:28:17
 func (coon *AliOssConfig) CheckConfig() {
 	//check endPoint
 	if coon.EndPoint == "" || len(coon.EndPoint) <= 0 {
@@ -49,8 +51,10 @@ func (coon *AliOssConfig) CheckConfig() {
 
 }
 
-// CreateOssConnect en: create oss connect client
-//创建阿里云oss 链接客户端
+//	@method: CreateOssConnect
+//	@description: 创建阿里云oss 链接客户端
+//	@author: mr.x 2021-06-19 00:28:10
+//	@return: *AliOssClient
 func (coon *AliOssConfig) CreateOssConnect() *AliOssClient {
 	//config check
 	coon.CheckConfig()
@@ -82,8 +86,10 @@ func (coon *AliOssConfig) CreateOssConnect() *AliOssClient {
 	}
 }
 
-// GetAccessibleUrl get oss accessible url
-//拼接阿里云oss可访问地址
+//	@method: GetAccessibleUrl
+//	@description: 拼接阿里云oss可访问地址
+//	@author: mr.x 2021-06-19 00:28:02
+//	@return: string
 func (coon *AliOssConfig) GetAccessibleUrl() string {
 	var domain string
 

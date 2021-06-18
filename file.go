@@ -24,8 +24,11 @@ type OssFileInterface interface {
 	GetFileType() *OssFile
 }
 
-// FileTypeTransForm file type transform
-//@title 文件类型转换
+//	@method: FileTypeTransForm
+//	@description: 文件类型转换
+//	@author: mr.x 2021-06-19 00:28:46
+//	@return: *OssFile
+//	@return: error
 func (ossFile *OssFile) FileTypeTransForm() (*OssFile,error) {
 	var err error
 
@@ -100,8 +103,10 @@ func (ossFile *OssFile) FileTypeTransForm() (*OssFile,error) {
 	return ossFile,nil
 }
 
-// GetFileType split file type and generate file name
-//截取文件类型
+//	@method: GetFileType
+//	@description: 截取文件类型
+//	@author: mr.x 2021-06-19 00:28:52
+//	@return: *OssFile
 func (ossFile *OssFile) GetFileType() *OssFile {
 
 	// 当没有传递文件类型时去文件名中截取出文件类型
