@@ -7,51 +7,49 @@ import (
 	"testing"
 )
 
-func TestPut(t *testing.T)  {
+func TestPut(t *testing.T) {
 	ossConfig := &AliOssConfig{
-		EndPoint: "",
-		AccessKeyId: "",
+		EndPoint:        "",
+		AccessKeyId:     "",
 		AccessKeySecret: "",
-		BucketName: "",
+		BucketName:      "",
 	}
 
 	client := ossConfig.CreateOssConnect()
 
-	uri := client.Put("logo/","./File/3HaqWaOzJWD86DDvZD9Pmn9VUEOBOBbuWackGOXb (2).jpeg",".png")
+	uri := client.Put("logo/", "./File/3HaqWaOzJWD86DDvZD9Pmn9VUEOBOBbuWackGOXb (2).jpeg", ".png")
 
 	fmt.Println(uri)
 }
 
-func TestPutBase64(t *testing.T)  {
+func TestPutBase64(t *testing.T) {
 	ossConfig := &AliOssConfig{
-		EndPoint: "",
-		AccessKeyId: "",
+		EndPoint:        "",
+		AccessKeyId:     "",
 		AccessKeySecret: "",
-		BucketName: "",
+		BucketName:      "",
 	}
 
 	client := ossConfig.CreateOssConnect()
 
 	// 读取base
-	file,_ := ioutil.ReadFile("./File/3HaqWaOzJWD86DDvZD9Pmn9VUEOBOBbuWackGOXb (2).jpeg")
-
+	file, _ := ioutil.ReadFile("./File/3HaqWaOzJWD86DDvZD9Pmn9VUEOBOBbuWackGOXb (2).jpeg")
 
 	fileStr := base64.StdEncoding.EncodeToString(file)
 
-	bat,_ := base64.StdEncoding.DecodeString(fileStr)
+	bat, _ := base64.StdEncoding.DecodeString(fileStr)
 
-
-	uri := client.Put("logo/",bat,".png")
+	uri := client.Put("logo/", bat, ".png")
 	//
 	fmt.Println(uri)
 }
 
-func TestExists(t *testing.T)  {
+func TestExists(t *testing.T) {
 	ossConfig := &AliOssConfig{
-		EndPoint: "oss-cn-shenzhen.aliyuncs.com",
-		AccessKeyId: "",
+		EndPoint:        "oss-cn-shenzhen.aliyuncs.com",
+		AccessKeyId:     "",
 		AccessKeySecret: "",
-		BucketName: "",
+		BucketName:      "",
 	}
 
 	client := ossConfig.CreateOssConnect()
@@ -63,10 +61,10 @@ func TestExists(t *testing.T)  {
 
 func TestDelete(t *testing.T) {
 	ossConfig := &AliOssConfig{
-		EndPoint: "oss-cn-shenzhen.aliyuncs.com",
-		AccessKeyId: "",
+		EndPoint:        "oss-cn-shenzhen.aliyuncs.com",
+		AccessKeyId:     "",
 		AccessKeySecret: "",
-		BucketName: "",
+		BucketName:      "",
 	}
 
 	client := ossConfig.CreateOssConnect()
@@ -78,10 +76,10 @@ func TestDelete(t *testing.T) {
 
 func TestAliOssClient_DeleteMore(t *testing.T) {
 	ossConfig := &AliOssConfig{
-		EndPoint: "oss-cn-shenzhen.aliyuncs.com",
-		AccessKeyId: "",
+		EndPoint:        "oss-cn-shenzhen.aliyuncs.com",
+		AccessKeyId:     "",
 		AccessKeySecret: "",
-		BucketName: "",
+		BucketName:      "",
 	}
 
 	client := ossConfig.CreateOssConnect()
@@ -96,16 +94,15 @@ func TestAliOssClient_DeleteMore(t *testing.T) {
 
 func TestAliOssClient_GetTemporaryUrl(t *testing.T) {
 	ossConfig := &AliOssConfig{
-		EndPoint: "",
-		AccessKeyId: "",
+		EndPoint:        "https://oss-cn-hangzhou.aliyuncs.com",
+		AccessKeyId:     "",
 		AccessKeySecret: "",
-		BucketName: "",
+		BucketName:      "",
 	}
 
 	client := ossConfig.CreateOssConnect()
 
-	singUrl := client.GetTemporaryUrl("logo/8497b913-2a79-58a1-984b-c25827f8212e.png",180)
+	singUrl := client.GetTemporaryUrl("", 180)
 
 	fmt.Println(singUrl)
 }
-
