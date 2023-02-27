@@ -1,6 +1,7 @@
 package go_aliyun_oss
 
 import (
+	"errors"
 	"fmt"
 	uuid "github.com/satori/go.uuid"
 	"io/ioutil"
@@ -12,39 +13,39 @@ import (
 )
 
 type OssFile struct {
-	FileByte []byte
+	FileByte    []byte
 	FileOldName string
 	FileNewName string
-	FileType string
-	File	interface{}
+	FileType    string
+	File        interface{}
 }
 
 type OssFileInterface interface {
-	FileTypeTransForm() (*OssFile,error)
+	FileTypeTransForm() (*OssFile, error)
 	GetFileType() *OssFile
 }
 
 // FileTypeTransForm file type transform
-//@title 文件类型转换
-func (ossFile *OssFile) FileTypeTransForm() (*OssFile,error) {
+// @title 文件类型转换
+func (ossFile *OssFile) FileTypeTransForm() (*OssFile, error) {
 	var err error
 
 	switch ossFile.File.(type) {
 	case *os.File:
 
-		ossFile.FileByte,err = ioutil.ReadAll(ossFile.File.(*os.File))
+		ossFile.FileByte, err = ioutil.ReadAll(ossFile.File.(*os.File))
 
 		if err != nil {
-			panic("read os type file failed:" + err.Error())
+			return nil, errors.New("read os type file failed:" + err.Error())
 		}
 
-		_,ossFile.FileOldName = filepath.Split(ossFile.File.(*os.File).Name())
+		_, ossFile.FileOldName = filepath.Split(ossFile.File.(*os.File).Name())
 
 		break
 
 	case *multipart.FileHeader:
 
-		fileResources,err := ossFile.File.(*multipart.FileHeader).Open()
+		fileResources, err := ossFile.File.(*multipart.FileHeader).Open()
 
 		if err != nil {
 			panic("open multipart file failed:" + err.Error())
@@ -52,10 +53,10 @@ func (ossFile *OssFile) FileTypeTransForm() (*OssFile,error) {
 
 		defer fileResources.Close()
 
-		ossFile.FileByte,err = ioutil.ReadAll(fileResources)
+		ossFile.FileByte, err = ioutil.ReadAll(fileResources)
 
 		if err != nil {
-			panic("read multipart file failed:" + err.Error())
+			return nil, errors.New("read multipart file failed:" + err.Error())
 		}
 
 		ossFile.FileOldName = ossFile.File.(*multipart.FileHeader).Filename
@@ -63,17 +64,17 @@ func (ossFile *OssFile) FileTypeTransForm() (*OssFile,error) {
 		break
 
 	case string:
-		newFile,err := os.Open(ossFile.File.(string))
+		newFile, err := os.Open(ossFile.File.(string))
 
 		if err != nil {
-			panic("open file path failed:" + err.Error())
+			return nil, errors.New("open file path failed:" + err.Error())
 		}
 
 		defer newFile.Close()
 
-		ossFile.FileByte,err = ioutil.ReadAll(newFile)
+		ossFile.FileByte, err = ioutil.ReadAll(newFile)
 
-		_,ossFile.FileOldName = filepath.Split(newFile.Name())
+		_, ossFile.FileOldName = filepath.Split(newFile.Name())
 
 		break
 
@@ -92,22 +93,22 @@ func (ossFile *OssFile) FileTypeTransForm() (*OssFile,error) {
 
 	default:
 		fmt.Println(reflect.TypeOf(ossFile.File))
-		panic("file type is not support" )
+		return nil, errors.New("file type is not support")
 	}
 
 	ossFile.GetFileType()
 
-	return ossFile,nil
+	return ossFile, nil
 }
 
 // GetFileType split file type and generate file name
-//截取文件类型
+// 截取文件类型
 func (ossFile *OssFile) GetFileType() *OssFile {
 
 	// 当没有传递文件类型时去文件名中截取出文件类型
 	if ossFile.FileType == "" || len(ossFile.FileType) <= 0 {
 		//from oldFileName split file type
-		fileTypeSufIndex := strings.Index(ossFile.FileOldName,".")
+		fileTypeSufIndex := strings.Index(ossFile.FileOldName, ".")
 
 		fileType := ossFile.FileOldName[fileTypeSufIndex:]
 
@@ -115,7 +116,7 @@ func (ossFile *OssFile) GetFileType() *OssFile {
 	}
 
 	//generate only file name
-	ossFile.FileNewName = uuid.NewV5(uuid.NewV4(),ossFile.FileOldName).String() + ossFile.FileType
+	ossFile.FileNewName = uuid.NewV5(uuid.NewV4(), ossFile.FileOldName).String() + ossFile.FileType
 
 	return ossFile
 }
