@@ -3,7 +3,7 @@ package go_aliyun_oss
 import (
 	"errors"
 	"fmt"
-	uuid "github.com/satori/go.uuid"
+	"github.com/google/uuid"
 	"io/ioutil"
 	"mime/multipart"
 	"os"
@@ -84,9 +84,9 @@ func (ossFile *OssFile) FileTypeTransForm() (*OssFile, error) {
 
 		//判断是否指定了文件的类型 如果没有指定默认为png格式
 		if ossFile.FileType == "" || len(ossFile.FileType) <= 0 {
-			ossFile.FileOldName = uuid.NewV4().String() + ".png"
+			ossFile.FileOldName = uuid.NewString() + ".png"
 		} else {
-			ossFile.FileOldName = uuid.NewV4().String() + ossFile.FileType
+			ossFile.FileOldName = uuid.NewString() + ossFile.FileType
 		}
 
 		break
@@ -116,7 +116,7 @@ func (ossFile *OssFile) GetFileType() *OssFile {
 	}
 
 	//generate only file name
-	ossFile.FileNewName = uuid.NewV5(uuid.NewV4(), ossFile.FileOldName).String() + ossFile.FileType
+	ossFile.FileNewName = uuid.NewString() + ossFile.FileType
 
 	return ossFile
 }
